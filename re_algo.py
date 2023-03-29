@@ -2,13 +2,44 @@
 # ground_case_1 = [5,11,12,13,16,17,18,31,44,45,46,47]
 # total_case_1 = user_case_1 + ground_case_1
 # total_case_1.sort()
-case_2 = [1,2,3,53,54,55]
+case_2 = [1,2,3,53,54,55,105]
 
 
-def solve_rummickub(user_case:list, ground_case:list):
-    duplication = range(52)
+def solve_rummickub(user_case:list, ground_case:list = []):
+    duplication = []
+    joker = is_joker(user_case) + is_joker(ground_case)
+    is_duplication(user_case, duplication)
+    is_duplication(ground_case, duplication)
     total_case = user_case + ground_case
     total_case.sort()
+    print(f"joker : {joker}")
+    print(f"user_case : {user_case}")
+    print(f"ground_case : {ground_case}")
+    print(f"total_case : {total_case}")
+    print(f"duplication : {duplication}")
+
+# is_duplication(list) -> void / 중복인지 확인하여 중복을 제거하고 dupl에 중복을 넣는다
+def is_duplication(_case, dupl):
+    prel = []
+    for i in _case:
+        if i > 52:
+            if (i - 52) in _case:
+                prel.append(i)
+    for i in prel:
+        _case.remove(i)
+        dupl.append(i)
+
+
+# is_joker(list) -> int / 
+def is_joker(_case):
+    count = 0
+    if 105 in _case:
+        _case.remove(105)
+        count += 1
+    if 106 in _case:
+        _case.remove(106)
+        count += 1
+    return count
 
 def get_subset(case):
     case = []
@@ -38,5 +69,4 @@ def get_relate_same_color(case):
 # print(total_case_1)
 # print(get_relate_same_number(total_case_1))
 # print(get_relate_same_color(total_case_1))
-print(get_relate_same_number(case_2))
-print(get_relate_same_color(case_2))
+print(solve_rummickub(case_2))

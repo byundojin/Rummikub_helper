@@ -1,4 +1,5 @@
 from itertools import combinations
+import time
 case_1 = list(range(1,53))
 user_case_2 = [15,43]
 ground_case_2 = [5,11,12,13,16,17,18,31,44,45,46,47]
@@ -29,36 +30,23 @@ def split_cube(case):
     result = []
     for i in n_cu:
         if len(i) >= 3:
-            result.append(i)
+            yield i
         if len(i) == 4:
             for j in combinations(i, 3):
-                result.append(list(j))
+                yield (list(j))
     for i in c_cu:
-        print("i",i)
         for j in i:
-            print("j",j)
             b=[j]
             while True:
-                print("b",b)
                 if j == i[-1] or b[-1] == i[-1] or b[-1] + 1 != i[i.index(b[-1]) + 1]:
-                    print("break")
                     break
                 b.append(i[i.index(b[-1]) + 1])
                 if len(b) > 2:
-                    print("app", b)
-                    result.append(b)
-    return result
+                    yield b[:]
 
-print(split_cube(case_2))
-
-
-
-
-
-
-
-
-
-
-
+a = [i for i in split_cube(case_2)]
+print("====================================")
+for i in a:
+    print(i)
+print(len(a))
 
